@@ -7,8 +7,8 @@ import os
 from utils import mkdir, mouseInRect
 
 # TO END THIS SCRIPT YOU'LL PROBABLY HAVE TO USE ESC ON YOUR KEYBOARD!
-# usage in terminal:
-# python .\main.py --outdir D:\MyDataset --outputName circle
+# example usage in terminal:
+# python .\main.py --outdir D:\MyDataset --outputName Circle
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--outputDir', required=False, type=str, default="",
@@ -123,6 +123,8 @@ while cv.getWindowProperty('image', 0) >= 0:
             cv.imwrite(os.path.join(smallOutputDir,
                                     "{}_{}.png".format(outputName, uuid.uuid4())), smallShape)
         print("SAVED IMAGES")
+        img[:] = backgroundColor
+        print("CLEARED CANVAS")
 
     # user pressed esc
     if key == 27:
