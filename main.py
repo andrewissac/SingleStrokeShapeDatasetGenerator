@@ -139,4 +139,5 @@ while cv.getWindowProperty('image', 0) >= 0:
                      (x + w, y + h), (0, 0, 255), 2)
     cv.imshow('image', boxesImg)
 
+
 cv.destroyAllWindows()
