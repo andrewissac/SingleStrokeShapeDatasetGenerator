@@ -111,6 +111,7 @@ while cv.getWindowProperty('image', 0) >= 0:
     elif key == 13:
         for rect in rects:
             x, y, w, h = rect
+            shapeID = uuid.uuid4()
 
             # extract shape based, resize and apply binarization
             ret, bigShape = cv.threshold(
@@ -119,9 +120,9 @@ while cv.getWindowProperty('image', 0) >= 0:
                 cv.resize(img[y:y+h, x:x+w], smallOutputSize, interpolation=cv.INTER_LINEAR), 30, 255, cv.THRESH_BINARY)
             # save extracted shape
             cv.imwrite(os.path.join(
-                bigOutputDir, "{}_{}.png".format(outputName, uuid.uuid4())), bigShape)
+                bigOutputDir, "{}_{}.png".format(outputName, shapeID)), bigShape)
             cv.imwrite(os.path.join(smallOutputDir,
-                                    "{}_{}.png".format(outputName, uuid.uuid4())), smallShape)
+                                    "{}_{}.png".format(outputName, shapeID)), smallShape)
         print("SAVED IMAGES")
         img[:] = backgroundColor
         print("CLEARED CANVAS")
