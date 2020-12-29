@@ -55,7 +55,7 @@ def mouseCallback(event, x, y, flags, param):
     if event == cv.EVENT_LBUTTONDOWN:
         drawing = True
         ix, iy = x, y
-        strokeThickness = random.randint(1, 10)
+        strokeThickness = random.randint(2, 10)
 
     elif event == cv.EVENT_RBUTTONDOWN:
         rMouseBtnDown = True
