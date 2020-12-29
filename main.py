@@ -6,15 +6,20 @@ import uuid
 import os
 from utils import mkdir, mouseInRect
 
+# TO END THIS SCRIPT YOU'LL PROBABLY HAVE TO USE ESC ON YOUR KEYBOARD!
+# usage in terminal:
+# python .\main.py --outdir D:\MyDataset --outputName circle
+
 parser = argparse.ArgumentParser()
-parser.add_argument('--outdir', required=False, type=str, default="",
+parser.add_argument('--outputDir', required=False, type=str, default="",
                     help='Output directory to put the images in')
 parser.add_argument('--outputName', required=True, type=str,
                     help='Output name of images')
 args = parser.parse_args()
 
+# region global variables
 outputName = args.outputName
-outputDir = os.path.join(args.outdir, outputName)
+outputDir = os.path.join(args.outputDir, outputName)
 
 bigOutputSize = 128, 128
 bigOutputSizeFolderName = str(bigOutputSize[0]) + "x" + str(bigOutputSize[1])
@@ -39,11 +44,11 @@ height = 900
 strokeColor = (255, 255, 255)
 strokeThickness = 3
 backgroundColor = (0, 0, 0)
-
 rects = []
+# endregion
 
 
-def drawStroke(event, x, y, flags, param):
+def mouseCallback(event, x, y, flags, param):
     # mouse callback function
     global ix, iy, drawing, strokeThickness, strokeColor, rMouseBtnDown
 
@@ -83,7 +88,7 @@ def drawStroke(event, x, y, flags, param):
 
 img = np.zeros((height, width, 3), np.uint8)
 cv.namedWindow('image')
-cv.setMouseCallback('image', drawStroke)
+cv.setMouseCallback('image', mouseCallback)
 
 while cv.getWindowProperty('image', 0) >= 0:
     img2 = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
@@ -99,10 +104,10 @@ while cv.getWindowProperty('image', 0) >= 0:
     # user pressed backspace
     if key == 8:
         # fill image with black
-        img[:] = (0, 0, 0)
-        print("CLEARED IMAGE")
-    # user pressed enter
+        img[:] = backgroundColor
+        print("CLEARED CANVAS")
 
+    # user pressed enter
     elif key == 13:
         for rect in rects:
             x, y, w, h = rect
@@ -124,8 +129,8 @@ while cv.getWindowProperty('image', 0) >= 0:
         print("ESC")
         break
     # endregion
-    boxesImg = img.copy()
 
+    boxesImg = img.copy()
     for rect in rects:
         x, y, w, h = rect
         cv.rectangle(boxesImg, (x, y),
